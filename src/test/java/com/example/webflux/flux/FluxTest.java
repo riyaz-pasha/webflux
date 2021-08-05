@@ -2,7 +2,10 @@ package com.example.webflux.flux;
 
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
 
 public class FluxTest {
 
@@ -72,5 +75,16 @@ public class FluxTest {
                 .expectNext("Apples", "Bananas", "Cherries", "Dates")
                 .expectErrorMessage("Run time exceptions occurred")
                 .verify();
+    }
+
+    @Test
+    void reduceFluxToMono() {
+        Mono<Boolean> fruits = Flux.just("Apples", "Bananas", "Cherries", "Dates")
+                .reduce(new ArrayList<String>(), (list, nextItem) -> {
+                    list.add(nextItem);
+                    return list;
+                }).map(list -> !list.isEmpty()).log();
+
+        fruits.subscribe(System.out::println, (err) -> System.err.println(err));
     }
 }
