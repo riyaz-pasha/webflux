@@ -79,11 +79,13 @@ public class FluxTest {
 
     @Test
     void reduceFluxToMono() {
-        Mono<Boolean> fruits = Flux.just("Apples", "Bananas", "Cherries", "Dates")
-                .reduce(new ArrayList<String>(), (list, nextItem) -> {
-                    list.add(nextItem);
-                    return list;
-                }).map(list -> !list.isEmpty()).log();
+        Mono<Boolean> fruits = Flux.just("Apples", "Bananas", "Cherries", "Dates").hasElements()
+//                .reduce(new ArrayList<String>(), (list, nextItem) -> {
+//                    list.add(nextItem);
+//                    return list;
+//                })
+//                .map(list -> !list.isEmpty())
+                .log();
 
         fruits.subscribe(System.out::println, (err) -> System.err.println(err));
     }
