@@ -15,7 +15,7 @@ public class AnotherAsyncService {
 
     @Async
     public void asyncMethod(Callable<Mono<?>> task) {
-        System.out.println("Execute method asynchronously. " + Thread.currentThread().getName());
+        log.info("Execute method asynchronously. in thread " + Thread.currentThread().getName());
         Mono<?> response = null;
         try {
             response = task.call();
