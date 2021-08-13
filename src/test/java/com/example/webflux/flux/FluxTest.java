@@ -105,6 +105,15 @@ public class FluxTest {
     }
 
     @Test
+    void FluxToMono() {
+        Mono<List<String>> fruits = Flux.just("Apples", "Bananas", "Cherries", "Dates")
+                .collectList()
+                .log();
+
+        fruits.subscribe(System.out::println, (err) -> System.err.println(err));
+    }
+
+    @Test
     void reduceMonoToFlux() {
         Flux<String> fruits = Mono.just(List.of("Apples", "Bananas", "Cherries", "Dates")).flatMapMany(Flux::fromIterable)
 //                .reduce(new ArrayList<String>(), (list, nextItem) -> {
