@@ -34,6 +34,18 @@ public class DummyClient {
         log.info("Dummy client is called Dummy service via webclient successfully....");
         return listMono;
     }
+
+    public Mono<List> getException() {
+        log.info("Dummy client is calling Dummy service via webclient");
+        Mono<List> listMono = WebClient.create("http://localhost:8080")
+                .get().uri("/dummyService/exception")
+                .retrieve()
+                .bodyToMono(List.class)
+                .doOnSuccess(res -> log.info("Success res " + res))
+                .doOnError(res -> log.info("Error res " + res));
+        log.info("Dummy client is called Dummy service via webclient successfully....");
+        return listMono;
+    }
 }
 
 @Data

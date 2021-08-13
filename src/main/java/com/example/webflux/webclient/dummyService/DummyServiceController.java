@@ -1,7 +1,9 @@
 package com.example.webflux.webclient.dummyService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -57,5 +59,12 @@ public class DummyServiceController {
     private Flux<String> getTableFlux(int num) {
         return Flux.range(1, 10)
                 .map(multiplier -> num + " * " + multiplier + " = " + num * multiplier);
+    }
+
+    @GetMapping("/dummyService/exception")
+    public ResponseEntity<Object> throwException() {
+        ResponseEntity<Object> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        log.info("DummyServiceController ----- Response " + (responseEntity));
+        return responseEntity;
     }
 }

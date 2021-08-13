@@ -27,4 +27,10 @@ public class DummyClientTestController {
         log.info("MyService is calling dummy client");
         return client.getTablesFromDummyServiceAsynchronous();
     }
+
+    @GetMapping("/myService/exception")
+    public Mono<List> exception() {
+        log.info("MyService is calling dummy client");
+        return client.getException();
+    }
 }
