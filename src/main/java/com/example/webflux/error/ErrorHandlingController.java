@@ -11,4 +11,9 @@ public class ErrorHandlingController {
     public Mono<String> example1() {
         return Mono.error(new NullPointerException("Hi error occurred"));
     }
+
+    @GetMapping("error2")
+    public Mono<String> example2() {
+        throw new NullPointerException("Exception thrown");
+    }
 }
