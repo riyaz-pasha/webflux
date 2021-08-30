@@ -34,19 +34,21 @@ public class DelayController {
     private Mono<String> waitAndGetResponseMono() {
         return getReponseWithDelay(1)
                 .expand(res -> {
-                    if (res == "dataNotPresent") return Mono.empty();
+                    if (res == null) return Mono.empty();
                     return getReponseWithDelay(Integer.parseInt(String.valueOf(res.charAt(res.length() - 1))) + 1);
                 })
                 .reduce((a, b) -> a + b);
     }
 
     private Mono<String> getReponseWithDelay(int num) {
-        return getResponse(num).delaySubscription(Duration.ofSeconds(5));
+        return Mono.delay(Duration.ofSeconds(5))
+                .then(getResponse(num));
+//                .delaySubscription(Duration.ofSeconds(5));
     }
 
     private Mono<String> getResponse(int num) {
         log.error("Returning response {}", num);
-        if (num > 5) return Mono.just("dataNotPresent");
+        if (num > 5) return null;
         return Mono.just("Riyaz" + num)
                 .doOnSubscribe((a) -> log.info("Subscribing {} {}", num, a))
                 .doOnNext(item -> log.info("doOnNext {}", item));
