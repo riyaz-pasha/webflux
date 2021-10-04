@@ -11,7 +11,7 @@ public class MonoTest {
     void monoSubscriptionExample() {
         Mono<String> stringMono = Mono.just("Hello World");
 
-        stringMono.subscribe(System.out::println);
+        stringMono.subscribe(res -> System.out.println("Subscriber : " + res));
     }
 
     @Test
