@@ -11,7 +11,9 @@ import java.util.Collections;
 @Configuration
 public class EhCacheConfiguration {
 
-    @Bean(name = "ehCache")
+    public static final String EH_CACHE = "ehCache";
+
+    @Bean(name = EH_CACHE)
     public CacheManager ehCacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(Collections.singletonList(new ConcurrentMapCache("numCache")));

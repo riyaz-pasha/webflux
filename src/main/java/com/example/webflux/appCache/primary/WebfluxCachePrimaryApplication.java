@@ -5,10 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication(scanBasePackages = "com.example.webflux.appCache.primary")
+@EnableCaching
 public class WebfluxCachePrimaryApplication implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
 
     public static void main(String[] args) {
