@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 @RestController
 public class EmployeeController {
@@ -15,7 +15,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/employees/save")
-    Mono<Page<Employee>> saveEmployees() {
+    Flux<Page<Employee>> saveEmployees() {
         return employeeService.saveInRedisCache();
     }
 
