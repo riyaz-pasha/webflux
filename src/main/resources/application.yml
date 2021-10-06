@@ -15,4 +15,10 @@ spring:
     url: jdbc:sqlserver://localhost:1433;databaseName=master
     username: sa
     password: Passw1rd #same as README
-#    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  #    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  redis:
+    host: localhost
+    password:
+    port: 6379
+    database: 0

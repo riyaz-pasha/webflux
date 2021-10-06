@@ -1,12 +1,12 @@
 package com.example.cacheanddb.controller;
 
-import com.example.cacheanddb.entity.Employee;
 import com.example.cacheanddb.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @RestController
 public class EmployeeController {
@@ -15,7 +15,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/employees/save")
-    Flux<Page<Employee>> saveEmployees() {
+    Flux<List<Boolean>> saveEmployees() {
         return employeeService.saveInRedisCache();
     }
 

@@ -19,7 +19,7 @@ public class Employee {
 
     @Id
     @Column(name = "id")
-    UUID id;
+    String id;
 
     @Column(name = "first_name")
     String firstName;
