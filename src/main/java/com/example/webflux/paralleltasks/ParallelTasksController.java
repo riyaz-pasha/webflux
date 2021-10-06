@@ -17,4 +17,9 @@ public class ParallelTasksController {
     public Flux<List<String>> getSomething() {
         return parallelTasksService.getTables();
     }
+
+    @GetMapping("/getSomething2")
+    public Flux<List<String>> getSomething2() {
+        return parallelTasksService.getTables2();
+    }
 }
