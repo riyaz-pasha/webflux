@@ -1,0 +1,18 @@
+logging:
+  level:
+    root: info
+    web: trace
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=master
+    username: sa
+    password: Passw1rd #same as README
+#    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
