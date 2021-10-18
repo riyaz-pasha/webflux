@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @RestController
 public class PrimaryCacheAppController {
 
@@ -15,5 +17,10 @@ public class PrimaryCacheAppController {
     @GetMapping("/word/{number}")
     Mono<String> getWordForNumber(@PathVariable int number) {
         return primaryCacheClient.getWordForNumber(number);
+    }
+
+    @GetMapping("/word2/{number}")
+    Mono<List<Character>> getWordCharListForNumber(@PathVariable int number) {
+        return primaryCacheClient.getWordCharListForNumber(number);
     }
 }

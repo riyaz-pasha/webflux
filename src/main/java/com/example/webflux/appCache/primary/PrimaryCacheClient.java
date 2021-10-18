@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @Slf4j
@@ -23,7 +22,7 @@ public class PrimaryCacheClient {
 
     @Autowired
     CacheManager cacheManager;
-    private Map<Integer, Signal<List<String>>> listMap = new HashMap<>();
+    private Map<Integer, List<Character>> listMap = new HashMap<>();
 
     Cache getCache() {
         return cacheManager.getCache("numCache");
@@ -55,17 +54,23 @@ public class PrimaryCacheClient {
         return cacheManager.getCache("numCache");
     }
 
-    public Mono<String> getWordCharListForNumber(Integer number) {
-        return CacheMono.lookup(listMap, number)
-                .onCacheMissResume(() -> getWordCharListForNumberFromClient(number));
+    public Mono<List<Character>> getWordCharListForNumber(Integer number) {
+        return CacheMono.lookup(key -> Mono.justOrEmpty(listMap.get(number)).map(Signal::next), number)
+                .onCacheMissResume(() -> getWordCharListForNumberFromClient(number))
+                .andWriteWith((key, signal) ->
+                        Mono.fromRunnable(() ->
+                                Optional.ofNullable(signal.get())
+                                        .ifPresent(value -> listMap.put(key, value))
+                        )
+                );
     }
 
-    private Mono<List<String>> getWordCharListForNumberFromClient(Integer number) {
+    private Mono<List<Character>> getWordCharListForNumberFromClient(Integer number) {
         return WebClient.create("http://localhost:9002")
                 .get().uri("/numberToWord/" + number)
                 .retrieve()
                 .bodyToMono(String.class)
-                .map(s -> Stream.of(s).map(String::toUpperCase).collect(Collectors.toList()))
+                .map(s -> s.chars().mapToObj(c -> (char) c).collect(Collectors.toList()))
                 .doOnNext(word -> log.info("Fetched word from client {} - {}", number, word));
     }
 }
