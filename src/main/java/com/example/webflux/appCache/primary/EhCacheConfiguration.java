@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class EhCacheConfiguration {
@@ -16,7 +17,10 @@ public class EhCacheConfiguration {
     @Bean(name = EH_CACHE)
     public CacheManager ehCacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
-        cacheManager.setCaches(Collections.singletonList(new ConcurrentMapCache("numCache")));
+        cacheManager.setCaches(List.of(
+                new ConcurrentMapCache("numCache"),
+                new ConcurrentMapCache("numCache2")
+        ));
         return cacheManager;
     }
 }
